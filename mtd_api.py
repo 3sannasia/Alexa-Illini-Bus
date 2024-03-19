@@ -37,13 +37,20 @@ class MTD_API:
         else:
             return {}
         
+    def save_stops_json(self) -> None:
+        response = requests.get(mtd.base_url.format("getstops"))
+        with open("stops.json", "w") as outfile:
+            json.dump(response.json(), outfile, indent=4)
+        
+
     def pretty_print(self, data: dict):
         return json.dumps(data, indent=4)
        
 if __name__ == "__main__":
     mtd = MTD_API()
-    print(mtd.pretty_print(mtd.get_routes_by_stop("IT:1")))
-    print(mtd.pretty_print(mtd.get_routes_by_stop("IT:1")))
+    # print(mtd.pretty_print(mtd.get_routes_by_stop("IT:1")))
+    # print(mtd.pretty_print(mtd.get_routes_by_stop("IT:1")))
+    
     
 
 
