@@ -22,13 +22,20 @@ class MTD_API:
         }
         response = requests.get(self.base_url.format(request_method), params = param)
         response_json = response.json()
-        if response.status_code == 202:
-            pass
+        if response.status_code == 202 or response.json()["new_changeset"] == False:
             # data not modified check in cache and return
+            print("Return from cache")
+            return self.cache["getroutesbystop"]
+        
+
         elif response.status_code == 200:
-            changeset_id = response_json["changeset_id"]
-            param["changeset_id"] = changeset_id
+            print("Insert to cache")
+            
+            self.changeset_id = response_json["changeset_id"]
+            self.cache["getroutesbystop"] = response_json
             return response_json
+        else:
+            return {}
         
     def pretty_print(self, data: dict):
         return json.dumps(data, indent=4)
@@ -36,6 +43,8 @@ class MTD_API:
 if __name__ == "__main__":
     mtd = MTD_API()
     print(mtd.pretty_print(mtd.get_routes_by_stop("IT:1")))
+    print(mtd.pretty_print(mtd.get_routes_by_stop("IT:1")))
+    
 
 
     
