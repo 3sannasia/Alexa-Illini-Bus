@@ -43,29 +43,20 @@ class Mtd_Api:
         else:
             return {}
 
-    def get_departures_by_stop(self, stop_name: str, num_buses: int):
-        param = {}
-        if num_buses:
-            param = {
-                "stop_id": self.stop_name_to_id_json[stop_name],
-                "changeset_id": self.changeset_id,
-                "pt": self.pt,
-                "count": num_buses,
-            }
-        else:
-            param = {
-                "stop_id": self.stop_name_to_id_json[stop_name],
-                "changeset_id": self.changeset_id,
-                "pt": self.pt,
-            }
+    def get_departures_by_stop(self, stop_name: str) -> dict:
+        param = {
+            "stop_id": self.stop_name_to_id_json[stop_name],
+            "changeset_id": self.changeset_id,
+            "pt": self.pt,
+        }
         response = requests.get(
             mtd.base_url.format("getdeparturesbystop"), params=param
         )
         response_json = response.json()
         if response.status_code == 200:
-            # parse to format I want -> stop name to all buses and the times they arrive
-            self.changeset_id = response_json["changeset_id"]
-            self.cache["getdeparturesbystop"][stop_name] = response_json
+            self.changeset_id = response_json["changeset_id"][stop_name]
+            # parse to format I want -> stop name to all buses and the times they arrive -> then put into cache
+
             return response_json
         elif response.status_code == 202 or response.json()["new_changeset"] == False:
             # data not modified, check in cache and return existing data
