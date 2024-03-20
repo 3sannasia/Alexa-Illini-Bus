@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 import requests
 import json
+from datetime import datetime, timezone
+import time
 
 
 class Mtd_Api:
@@ -20,30 +22,14 @@ class Mtd_Api:
         )
         self.changeset_id = None
         self.cache = {}
+        self.last_api_hit = 0
         self.favorite_stop = None
 
-    # Don't need, just for testing cache and api usage
-    def get_routes_by_stop(self, stop_id: str) -> dict:
-        request_method = "getroutesbystop"
-        param = {"stop_id": stop_id, "changeset_id": self.changeset_id}
-        response = requests.get(self.base_url.format(request_method), params=param)
-        response_json = response.json()
-
-        if response.status_code == 200:
-            print("Insert to cache")
-
-            self.changeset_id = response_json["changeset_id"]
-            self.cache["getroutesbystop"] = response_json
-            return response_json
-        elif response.status_code == 202 or response.json()["new_changeset"] == False:
+    def get_departures_by_stop(self, stop_name: str) -> list:
+        if datetime.now(timezone.utc).timestamp() - self.last_api_hit < 60:
+            print("\nhit cache \n")
             # data not modified, check in cache and return existing data
-            print("Return from cache")
-            return self.cache["getroutesbystop"]
-
-        else:
-            return {}
-
-    def get_departures_by_stop(self, stop_name: str) -> dict:
+            return self.cache["getdeparturesbystop"][stop_name]
         param = {
             "stop_id": self.stop_name_to_id_json[stop_name],
             "changeset_id": self.changeset_id,
@@ -54,13 +40,16 @@ class Mtd_Api:
         )
         response_json = response.json()
         if response.status_code == 200:
-            self.changeset_id = response_json["changeset_id"][stop_name]
-            # parse to format I want -> stop name to all buses and the times they arrive -> then put into cache
-
-            return response_json
-        elif response.status_code == 202 or response.json()["new_changeset"] == False:
-            # data not modified, check in cache and return existing data
-            return self.cache["getdeparturesbystop"]["stop_name"]
+            print("\n New cache \n")
+            self.last_api_hit = datetime.now(timezone.utc).timestamp()
+            bus_arrival_time_list = []
+            for departure in response_json["departures"]:
+                bus_arrival_time_list.append(
+                    [departure["headsign"], departure["expected_mins"]]
+                )
+            self.cache.setdefault("getdeparturesbystop", {}).setdefault(stop_name, {})
+            self.cache["getdeparturesbystop"][stop_name] = bus_arrival_time_list
+            return bus_arrival_time_list
 
         else:
             return {}
@@ -90,7 +79,5 @@ class Mtd_Api:
 
 if __name__ == "__main__":
     mtd = Mtd_Api()
-    mtd.save_name_to_id_json()
 
     print(mtd.pretty_print(mtd.get_departures_by_stop("Fourth and Chalmers")))
-    # print(mtd.pretty_print(mtd.get_routes_by_stop("IT:1")))
