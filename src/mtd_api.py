@@ -4,7 +4,7 @@ import requests
 import json
 
 
-class MTD_API:
+class Mtd_Api:
     def __init__(self):
         load_dotenv()
         self.api = os.getenv("MTD_API_KEY")
