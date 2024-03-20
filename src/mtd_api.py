@@ -22,7 +22,7 @@ class Mtd_Api:
         response = requests.get(self.base_url.format(request_method), params=param)
         response_json = response.json()
         if response.status_code == 202 or response.json()["new_changeset"] == False:
-            # data not modified check in cache and return
+            # data not modified, check in cache and return existing data
             print("Return from cache")
             return self.cache["getroutesbystop"]
 
