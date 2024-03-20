@@ -44,11 +44,12 @@ class MTD_API:
         # Create and save json of stop_name to stop_id
 
     def save_name_to_id_json(self) -> None:
-
+        stops_json = json.load(open("stops.json"))
         stop_name_to_id_dict = {}
-        for stop in response_json["stops"]:
+        for stop in stops_json["stops"]:
             stop_name_to_id_dict[stop["stop_name"]] = stop["stop_id"]
-        print(len(stop_name_to_id_dict))
+        with open("stop_name_to_id.json", "w") as outfile:
+            json.dump(stop_name_to_id_dict, outfile, indent=4)
 
     def pretty_print(self, data: dict):
         return json.dumps(data, indent=4)
@@ -56,6 +57,7 @@ class MTD_API:
 
 if __name__ == "__main__":
     mtd = MTD_API()
+    mtd.save_name_to_id_json()
 
     # print(mtd.pretty_print(mtd.get_routes_by_stop("IT:1")))
     # print(mtd.pretty_print(mtd.get_routes_by_stop("IT:1")))
