@@ -41,8 +41,6 @@ class Mtd_Api:
         with open("stops.json", "w") as outfile:
             json.dump(response_json, outfile, indent=4)
 
-        # Create and save json of stop_name to stop_id
-
     def save_name_to_id_json(self) -> None:
         stops_json = json.load(open("stops.json"))
         stop_name_to_id_dict = {}
@@ -56,7 +54,7 @@ class Mtd_Api:
 
 
 if __name__ == "__main__":
-    mtd = MTD_API()
+    mtd = Mtd_Api()
     mtd.save_name_to_id_json()
 
     # print(mtd.pretty_print(mtd.get_routes_by_stop("IT:1")))
