@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 import requests
 import json
 from datetime import datetime, timezone
-import time
 
 
 class Mtd_Api:
