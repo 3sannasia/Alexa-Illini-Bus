@@ -49,7 +49,7 @@ class Mtd_Api:
         else:
             return {}
 
-    def set_favorite_stop(self, stop_name: str):
+    def set_favorite_stop(self, stop_name: str) -> None:
         if stop_name in self.stop_name_to_id_json.keys():
             self.favorite_stop = stop_name
             self.last_api_hit = 0
@@ -69,7 +69,7 @@ class Mtd_Api:
         with open("mtd bus stop data/stop_name_to_id.json", "w") as outfile:
             json.dump(stop_name_to_id_dict, outfile, indent=4)
 
-    def prettify_json(self, data: dict):
+    def prettify_json(self, data: dict) -> json:
         return json.dumps(data, indent=4)
 
 
