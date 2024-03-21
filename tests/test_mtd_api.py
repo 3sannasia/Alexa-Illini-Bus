@@ -18,13 +18,13 @@ def test_stop_name_to_id_json(mtd):
 
 
 def test_set_favorite_stop(mtd):
-    assert mtd.favorite_stop == None
+    assert mtd.favorite_stop is None
     mtd.set_favorite_stop("Fourth and Chalmers")
     assert mtd.favorite_stop == "Fourth and Chalmers"
 
 
 def test_set_favorite_stop_error(mtd):
-    assert mtd.favorite_stop == None
+    assert mtd.favorite_stop is None
     mtd.set_favorite_stop("Fourth and Chalmers")
     assert mtd.favorite_stop == "Fourth and Chalmers"
     with pytest.raises(ValueError):
@@ -73,7 +73,7 @@ def test_get_departures_by_stop(mtd):
 
 
 def test_continuous_application_get_departures(mtd):
-    assert mtd.favorite_stop == None
+    assert mtd.favorite_stop is None
     assert mtd.last_api_hit == 0
 
     mtd.set_favorite_stop("Fourth and Chalmers")
