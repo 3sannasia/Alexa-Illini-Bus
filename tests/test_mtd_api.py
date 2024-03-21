@@ -35,15 +35,13 @@ def test_set_favorite_stop_error(mtd):
 def test_get_departures_by_favorite_stop(mtd):
     mtd.set_favorite_stop("Fourth and Chalmers")
     assert mtd.favorite_stop == "Fourth and Chalmers"
+
     bus_array = mtd.get_departures_by_stop(mtd.favorite_stop)
     api_hit_time = mtd.last_api_hit
     assert len(bus_array) > 0
-    print(bus_array)
-    print(mtd.cache)
-
     assert len(mtd.cache) > 0
-
     assert mtd.last_api_hit > 0
+
     bus_array_cache = mtd.get_departures_by_stop(mtd.favorite_stop)
     assert len(mtd.cache) > 0
     assert len(bus_array_cache) > 0
