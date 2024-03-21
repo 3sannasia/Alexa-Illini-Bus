@@ -39,6 +39,8 @@ def test_get_departures_by_favorite_stop(mtd):
     api_hit_time = mtd.last_api_hit
     assert len(bus_array) > 0
     print(bus_array)
+    print(mtd.cache)
+
     assert len(mtd.cache) > 0
 
     assert mtd.last_api_hit > 0
