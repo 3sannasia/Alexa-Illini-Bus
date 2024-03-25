@@ -66,8 +66,8 @@ def test_get_mtd_autocomplete_stop_id(mtd):
 
 def test_get_ordinal(mtd):
     assert mtd.convert_ordinal("3rd") == "third"
-    # assert mtd.convert_ordinal("4th") == "fourth"
-    # assert mtd.convert_ordinal("1st") == "first"
+    assert mtd.convert_ordinal("4th") == "fourth"
+    assert mtd.convert_ordinal("1st") == "first"
 
 
 # # Takes 1 minute to run
