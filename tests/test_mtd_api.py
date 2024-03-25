@@ -60,6 +60,16 @@ def test_get_departures_by_stop(mtd):
     assert mtd.last_api_hit == api_hit_time
 
 
+def test_get_mtd_autocomplete_stop_id(mtd):
+    assert mtd.get_mtd_autocomplete_stop_id("Fourth and chalmers") == "4THCHAL"
+
+
+def test_get_ordinal(mtd):
+    assert mtd.convert_ordinal("3rd") == "third"
+    # assert mtd.convert_ordinal("4th") == "fourth"
+    # assert mtd.convert_ordinal("1st") == "first"
+
+
 # # Takes 1 minute to run
 # def test_get_departures_by_stop_no_cache(mtd):
 #     bus_array = mtd.get_departures_by_stop("Fourth and Chalmers")

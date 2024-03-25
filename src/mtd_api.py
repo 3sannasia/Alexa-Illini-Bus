@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import requests
 import json
 from datetime import datetime, timezone
+import inflect
 
 
 class Mtd_Api:
@@ -49,6 +50,16 @@ class Mtd_Api:
         else:
             return {}
 
+    def get_mtd_autocomplete_stop_id(self, user_input) -> str:
+        mtd_autocomplete_api_url = (
+            f"https://search.mtd.org/v1.0.0/stop/suggest/{user_input}"
+        )
+        autocomplete_response = requests.get(mtd_autocomplete_api_url)
+        if autocomplete_response.status_code != 200:
+            return None
+        bus_id = autocomplete_response.json()[0]["result"]["id"]
+        return bus_id
+
     def set_favorite_stop(self, stop_name: str) -> None:
         if stop_name in self.stop_name_to_id_json.keys():
             self.favorite_stop = stop_name
@@ -72,7 +83,12 @@ class Mtd_Api:
     def prettify_json(self, data: dict) -> json:
         return json.dumps(data, indent=4)
 
+    # Ex: Pass in 3rd or 4th
+    def convert_ordinal(self, ordinal: str):
+        p = inflect.engine()
+        return p.number_to_words(ordinal)
+
 
 if __name__ == "__main__":
     mtd = Mtd_Api()
-    print(mtd.prettify_json(mtd.get_departures_by_stop("Fourth and Chalmers")))
+    # print(mtd.prettify_json(mtd.get_departures_by_stop("Fourth and Chalmers")))
