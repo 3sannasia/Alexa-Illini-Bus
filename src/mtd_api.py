@@ -83,12 +83,26 @@ class Mtd_Api:
     def prettify_json(self, data: dict) -> json:
         return json.dumps(data, indent=4)
 
-    # Ex: Pass in 3rd or 4th
-    def convert_ordinal(self, ordinal: str):
-        p = inflect.engine()
-        return p.number_to_words(ordinal)
+    def is_ordinal_string(self, s: str):
+        if s.endswith("rd") or s.endswith("th") or s.endswith("st") or s.endswith("nd"):
+            # Remove the suffix and check if the remaining part is a number
+            number_part = s[:-2]
+            if number_part.isdigit():
+                return True
+        return False
+
+    def convert_ordinal(self, intent_request: str):
+        split_response = intent_request.split(" ")
+        for i in range(len(split_response)):
+            if self.is_ordinal_string(split_response[i]):
+                p = inflect.engine()
+                split_response[i] = p.number_to_words(split_response[i])
+        intent_request = " ".join(split_response)
+
+        return intent_request
 
 
 if __name__ == "__main__":
     mtd = Mtd_Api()
     # print(mtd.prettify_json(mtd.get_departures_by_stop("Fourth and Chalmers")))
+    print(mtd.get_mtd_autocomplete_stop_id(mtd.convert_ordinal("4th and Chalmers")))

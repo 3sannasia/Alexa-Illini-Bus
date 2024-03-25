@@ -64,10 +64,12 @@ def test_get_mtd_autocomplete_stop_id(mtd):
     assert mtd.get_mtd_autocomplete_stop_id("Fourth and chalmers") == "4THCHAL"
 
 
-def test_get_ordinal(mtd):
-    assert mtd.convert_ordinal("3rd") == "third"
-    assert mtd.convert_ordinal("4th") == "fourth"
-    assert mtd.convert_ordinal("1st") == "first"
+def test_convert_ordinal(mtd):
+    assert mtd.convert_ordinal("4th and Chalmers") == "fourth and Chalmers"
+    assert (
+        mtd.get_mtd_autocomplete_stop_id(mtd.convert_ordinal("4th and Chalmers"))
+        == "4THCHAL"
+    )
 
 
 # # Takes 1 minute to run
