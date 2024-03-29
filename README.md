@@ -3,8 +3,9 @@
 <p align="center"> A voice-activated way for finding the next buses coming to your Urbana-Champaign bus stop </p>
 
 <p align="center">
-  <a href="#usage">Usage</a> •
+  <a href="#features">Features</a> •
   <a href="#demo">Demo</a> •
+  <a href="#components">Components</a> •
    <a href="#resources">Resources</a>
 </p>
 
@@ -16,15 +17,23 @@
 
 </div>
 
-## Usage
+## Features
 
 - Say `open illini bus` to start the skill
-- Say key work `use` then the name of your bus stop
+
+- Say key word `use` then the name of your bus stop
     - Example: `use [bus stop name]`
     - Implemented using the [CUMTD Auto Complete API](https://developer.cumtd.com/documentation/autocomplete/v1.0.0/stop/)
 
+- Alexa uses DynamoDB to remember your bus stop
+    - Faster future responses
+
+- Hosted on AWS Lambda
+
+
 ## Demo
-![illini bus run](https://github.com/3sannasia/Alexa-Illini-Bus/assets/54860072/c8548a84-b6af-457e-a523-6ef491f5e0a7)
+<p align="center"><img src="https://github.com/3sannasia/Alexa-Illini-Bus/assets/54860072/c8548a84-b6af-457e-a523-6ef491f5e0a7"width="400" /></p>
+
 
 
 ## Resources
