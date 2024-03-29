@@ -25,7 +25,7 @@
     - Example: `use [bus stop name]`
     - Implemented using the [CUMTD Auto Complete API](https://developer.cumtd.com/documentation/autocomplete/v1.0.0/stop/)
 
-- Alexa uses DynamoDB to remember your bus stop
+- Uses DynamoDB to remember your bus stop
     - Faster future responses
 
 - Hosted on AWS Lambda
