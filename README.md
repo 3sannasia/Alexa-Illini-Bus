@@ -5,7 +5,6 @@
 <p align="center">
   <a href="#features">Features</a> •
   <a href="#demo">Demo</a> •
-  <a href="#components">Components</a> •
    <a href="#resources">Resources</a>
 </p>
 
