@@ -16,6 +16,7 @@ class Mtd_Api:
         self.base_url = "https://developer.mtd.org/api/{}/{}/{{}}?key={}".format(
             self.version, self.data_format, self.api
         )
+
         self.stop_json = json.load(open("mtd bus stop data/stops.json"))
         self.stop_name_to_id_json = json.load(
             open("mtd bus stop data/stop_name_to_id.json")
@@ -104,5 +105,16 @@ class Mtd_Api:
 
 if __name__ == "__main__":
     mtd = Mtd_Api()
-    # print(mtd.prettify_json(mtd.get_departures_by_stop("Fourth and Chalmers")))
-    print(mtd.get_mtd_autocomplete_stop_id(mtd.convert_ordinal("4th and Chalmers")))
+    print(mtd.prettify_json(mtd.get_departures_by_stop("Fourth and Chalmers")))
+    # print(mtd.get_mtd_autocomplete_stop_id(mtd.convert_ordinal("4th and Chalmers")))
+
+    param = {
+        "stop_id": "4THCHAL",
+        "pt": 60,
+    }
+    response = requests.get(
+        "https://developer.mtd.org/api/v2.2/JSON/getdeparturesbystop?key=82f7ce1666ea49618131b32ac13ad7f3",
+        params=param,
+    )
+
+    print(mtd.prettify_json(response.json()))
