@@ -1,6 +1,6 @@
 
 <h1 align="center">Alexa Skill: Illini Bus</h1>
-<p align="center"> A voice-activated way for finding the next buses arriving to your Urbana-Champaign bus stop </p>
+<p align="center"> A voice-activated way for finding the next buses arriving at your Urbana-Champaign bus stop </p>
 
 <p align="center">
   <a href="#features">Features</a> •
