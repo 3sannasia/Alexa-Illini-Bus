@@ -1,4 +1,5 @@
-<p align="center"><img src="https://github.com/3sannasia/Alexa-llini-Bus/assets/54860072/f1db4a2c-1fad-409a-9381-e84181543fbd" alt="logo" width="220px" /></p>
+<p align="center"><img src="https://github.com/3sannasia/Alexa-llini-Bus/assets/54860072/13f6f409-eb3e-4474-9a90-59f67bff2f68" alt="logo" width="220px" /></p>
+
 
 <h1 align="center">Alexa Skill: Illini Bus</h1>
 
